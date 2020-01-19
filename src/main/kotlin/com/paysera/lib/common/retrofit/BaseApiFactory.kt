@@ -49,7 +49,7 @@ abstract class BaseApiFactory<T : BaseApiClient>(
         }
     }
 
-    protected fun createGsonConverterFactory(): GsonConverterFactory {
+    protected open fun createGsonConverterFactory(): GsonConverterFactory {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
         gsonBuilder.registerTypeAdapter(Money::class.java, MoneySerializer())

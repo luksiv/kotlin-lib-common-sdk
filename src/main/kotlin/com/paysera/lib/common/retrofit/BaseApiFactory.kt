@@ -20,7 +20,8 @@ import java.util.concurrent.TimeUnit
 abstract class BaseApiFactory<T : BaseApiClient>(
     private val userAgent: String?,
     private val credentials: ApiCredentials?,
-    private val timeout: Long? = null
+    private val timeout: Long? = null,
+    private val httpLoggingInterceptorLevel: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BASIC
 ) {
     abstract fun createClient(baseUrl: String, tokenRefresher: TokenRefresherInterface?): T
 
@@ -78,7 +79,7 @@ abstract class BaseApiFactory<T : BaseApiClient>(
                     chain.proceed(modifiedRequest)
                 }
             }
-            addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            addInterceptor(HttpLoggingInterceptor().setLevel(httpLoggingInterceptorLevel))
             build()
         }
     }
